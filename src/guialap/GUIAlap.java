@@ -22,8 +22,11 @@ public class GUIAlap extends javax.swing.JFrame {
     /**
      * Creates new form GUIAlap
      */
+    private boolean voltValtozas;
+
     public GUIAlap() {
         initComponents();
+        voltValtozas = false;
     }
 
     /**
@@ -47,7 +50,7 @@ public class GUIAlap extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton1 = new javax.swing.JRadioButton();
-        jButton4 = new javax.swing.JButton();
+        btnKilepes = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -55,13 +58,18 @@ public class GUIAlap extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuMentes = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuKilepes = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BlackJack");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Játékos"));
 
@@ -116,11 +124,26 @@ public class GUIAlap extends javax.swing.JFrame {
         buttonGroup2.add(jRadioButton2);
         jRadioButton2.setSelected(true);
         jRadioButton2.setText("lapok összértéke");
+        jRadioButton2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                valtozas(evt);
+            }
+        });
 
         buttonGroup2.add(jRadioButton1);
         jRadioButton1.setText("lapokat felsorol");
+        jRadioButton1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                valtozas(evt);
+            }
+        });
 
-        jButton4.setText("Kilépés");
+        btnKilepes.setText("Kilépés");
+        btnKilepes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKilepesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -132,7 +155,7 @@ public class GUIAlap extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton4)
+                                .addComponent(btnKilepes)
                                 .addComponent(jRadioButton1)
                                 .addComponent(btnMentes))
                             .addGap(12, 12, 12))
@@ -155,7 +178,7 @@ public class GUIAlap extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(btnKilepes)
                 .addContainerGap())
         );
 
@@ -198,8 +221,13 @@ public class GUIAlap extends javax.swing.JFrame {
         });
         jMenu1.add(menuMentes);
 
-        jMenuItem2.setText("Kilépés");
-        jMenu1.add(jMenuItem2);
+        menuKilepes.setText("Kilépés");
+        menuKilepes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuKilepesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuKilepes);
 
         jMenuBar1.add(jMenu1);
 
@@ -259,6 +287,31 @@ public class GUIAlap extends javax.swing.JFrame {
     private void btnMentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMentesActionPerformed
         mentes();
     }//GEN-LAST:event_btnMentesActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        kilepes();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnKilepesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKilepesActionPerformed
+        kilepes();
+    }//GEN-LAST:event_btnKilepesActionPerformed
+
+    private void menuKilepesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKilepesActionPerformed
+        kilepes();
+    }//GEN-LAST:event_menuKilepesActionPerformed
+
+    private void valtozas(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valtozas
+        voltValtozas = true;
+    }//GEN-LAST:event_valtozas
+    private void kilepes() {
+        if (voltValtozas) {
+            if (felugro("Biztos kilép?") == JOptionPane.OK_OPTION) {
+                System.exit(0);
+            }
+        } else {
+            System.exit(0);
+        }
+    }
 
     private void mentes() throws HeadlessException {
         JFileChooser jfc = new JFileChooser(new File("."));
@@ -322,12 +375,12 @@ public class GUIAlap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKilepes;
     private javax.swing.JButton btnMentes;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -337,7 +390,6 @@ public class GUIAlap extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -345,6 +397,7 @@ public class GUIAlap extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
+    private javax.swing.JMenuItem menuKilepes;
     private javax.swing.JMenuItem menuMentes;
     // End of variables declaration//GEN-END:variables
 
