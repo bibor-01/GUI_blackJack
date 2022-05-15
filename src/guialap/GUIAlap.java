@@ -5,6 +5,14 @@
  */
 package guialap;
 
+import java.awt.HeadlessException;
+import java.io.File;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Bibor
@@ -35,7 +43,7 @@ public class GUIAlap extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        btnMentes = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -46,7 +54,7 @@ public class GUIAlap extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuMentes = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
@@ -96,7 +104,12 @@ public class GUIAlap extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), null));
 
-        jButton3.setText("Mentés");
+        btnMentes.setText("Mentés");
+        btnMentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMentesActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setText("Kilépésnél ment");
 
@@ -121,7 +134,7 @@ public class GUIAlap extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jButton4)
                                 .addComponent(jRadioButton1)
-                                .addComponent(jButton3))
+                                .addComponent(btnMentes))
                             .addGap(12, 12, 12))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jCheckBox1)
@@ -138,7 +151,7 @@ public class GUIAlap extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnMentes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -177,8 +190,13 @@ public class GUIAlap extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Mentés");
-        jMenu1.add(jMenuItem1);
+        menuMentes.setText("Mentés");
+        menuMentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMentesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuMentes);
 
         jMenuItem2.setText("Kilépés");
         jMenu1.add(jMenuItem2);
@@ -234,6 +252,40 @@ public class GUIAlap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void menuMentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMentesActionPerformed
+        mentes();
+    }//GEN-LAST:event_menuMentesActionPerformed
+
+    private void btnMentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMentesActionPerformed
+        mentes();
+    }//GEN-LAST:event_btnMentesActionPerformed
+
+    private void mentes() throws HeadlessException {
+        JFileChooser jfc = new JFileChooser(new File("."));
+        jfc.setDialogTitle("Megnyitás");
+
+        FileNameExtensionFilter filterKepek = new FileNameExtensionFilter("képek (*.jpg, *.gif)", "jpg", "gif");
+        FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("csak szöveg (*.txt)", "txt");
+
+        jfc.addChoosableFileFilter(filterKepek);
+        jfc.addChoosableFileFilter(filterTxt);
+
+        jfc.setFileFilter(filterTxt);
+
+        int gomb = jfc.showOpenDialog(jPanel1);
+        if (gomb == JFileChooser.APPROVE_OPTION) {
+            String fajlNev = "Fájl neve: " + jfc.getSelectedFile().getName();
+            String eleres = "Elérése: " + jfc.getSelectedFile().getPath();
+            String uzenet = fajlNev + "\n" + eleres;
+            felugro(uzenet);
+        }
+    }
+
+    private int felugro(String uzenet) {
+        Icon icon = new ImageIcon(this.getClass().getResource("res/ikon.jpg"));
+        return JOptionPane.showConfirmDialog(rootPane, uzenet, "Kérdés", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -270,11 +322,11 @@ public class GUIAlap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMentes;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
@@ -285,7 +337,6 @@ public class GUIAlap extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -294,5 +345,7 @@ public class GUIAlap extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
+    private javax.swing.JMenuItem menuMentes;
     // End of variables declaration//GEN-END:variables
+
 }
